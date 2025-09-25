@@ -1,0 +1,31 @@
+openapi: 3.0.0
+info: {title: StrucX.ai Orchestrator, version: 0.1.0}
+paths:
+  /v1/health:
+    get:
+      responses: { '200': { description: OK } }
+  /v1/ely/chat:
+    post:
+      summary: Chat SSE/WS (usar header x-mode: live|studio|research)
+      responses: { '200': { description: Stream started } }
+  /api/sensors/{clientid}:
+    post:
+      parameters:
+        - in: path
+          name: clientid
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ts: { type: integer }
+                clientid: { type: string }
+                node_id: { type: string }
+                disp_mm: { type: number }
+                axial_strain: { type: number }
+                temp_c: { type: number }
+      responses: { '200': { description: Ingested } }
